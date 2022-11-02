@@ -55,6 +55,7 @@ class DBProvider {
     return res; // Es el Id del último registro insertado
   }
 
+  // SELECT - Obtener información
   Future<ScanModel?> getScanById(int id) async {
     final db = await database;
     final res = await db?.query('Scans', where: 'id = ?', whereArgs: [id]);
@@ -75,9 +76,25 @@ class DBProvider {
     return res!.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
   }
 
+  // Actualizar Registros
   Future<int?> updateScan(ScanModel nuevoScan) async {
     final db = await database;
     final res = await db?.update('Scans', nuevoScan.toJson(), where: 'id = ?', whereArgs: [nuevoScan.id]);
+    return res;
+  }
+
+  // Eliminar registros
+  Future<int?> deleteScan(int id) async {
+    final db = await database;
+    final res = await db?.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int?> deleteAll() async {
+    final db = await database;
+    final res = await db?.rawDelete('''
+      DELETE FROM Scans
+    ''');
     return res;
   }
 }
