@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 class DBProvider {
   static Database? _database;
@@ -13,6 +16,25 @@ class DBProvider {
   }
 
   Future<Database?> initDB() async {
+    // Path en donde almacenaremos la base de datos
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final path = join(documentsDirectory.path, 'ScansDB.db');
+    print(path);
 
+    // Crear la Base de datos
+    return await openDatabase(
+      path,
+      version: 1,
+      onOpen: (db) {},
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE Scans(
+            id INTEGER PRIMARY KEY,
+            tipo TEXT,
+            valor TEXT
+          )
+      ''');
+      },
+    );
   }
 }
