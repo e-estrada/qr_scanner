@@ -44,19 +44,9 @@ class _HomePageBody extends StatelessWidget {
     switch (currentIndex) {
       case 0:
         scanListProvider.cargarScansPortipo('geo');
-        // for (var scans in scanListProvider.scans) {
-        //   var tipo = scans.tipo;
-        //   var valor = scans.valor;
-        //   print('$tipo : $valor');
-        // }
         return const MapasPage();
       case 1:
         scanListProvider.cargarScansPortipo('http');
-        // for (var scans in scanListProvider.scans) {
-        //   var tipo = scans.tipo;
-        //   var valor = scans.valor;
-        //   print('$tipo : $valor');
-        // }
         return const DireccionesPage();
       default:
         return const MapasPage();
