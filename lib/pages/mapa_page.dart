@@ -27,7 +27,7 @@ class _MapaPageState extends State<MapaPage> {
       tilt: 50
     );
     // Marcadores
-    Set<Marker> markers = Set<Marker>();
+    Set<Marker> markers = <Marker>{};
     markers.add(
       Marker(
         markerId: const MarkerId('geo-location'),
@@ -37,6 +37,21 @@ class _MapaPageState extends State<MapaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mapa'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final GoogleMapController controller = await googleMapController.future;
+              controller.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: scan.getLatLng(),
+                  zoom: 20,
+                  tilt: 50,
+                )
+              ));
+            }, 
+            icon: const Icon(Icons.location_on)
+          )
+        ],
       ),
       body: GoogleMap(
         myLocationButtonEnabled: false,
@@ -45,6 +60,13 @@ class _MapaPageState extends State<MapaPage> {
         initialCameraPosition: puntoInicial,
         onMapCreated: (GoogleMapController controller) {
           googleMapController.complete(controller);
+        },
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.layers),
+        onPressed: () {
+          
         },
       ),
     );
