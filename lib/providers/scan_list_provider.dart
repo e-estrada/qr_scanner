@@ -17,14 +17,14 @@ class ScanListProvider extends ChangeNotifier {
   }
 
   cargarScans() async {
-    var scans = await DBProvider.db.getAllScans();
-    scans = [...scans];
+    final scans = await DBProvider.db.getAllScans();
+    this.scans = [...scans];
     notifyListeners();
   }
 
   cargarScansPortipo(String tipo) async {
-    var scans = await DBProvider.db.getScansByTipo(tipo);
-    scans = [...scans];
+    final scans = await DBProvider.db.getScansByTipo(tipo);
+    this.scans = [...scans];
     tipoSeleccionado = tipo;
     notifyListeners();
   }
